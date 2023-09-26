@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.redhat.qe.openjdk</groupId>
+		<artifactId>parent-msa-wildfly-swarm</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath>../parent-msa-wildfly-swarm</relativePath>
+	</parent>
+
+	<artifactId>sti-wildfly-swarm</artifactId>
+	<name>WildFly Swarm HelloWorld Sample</name>
+	<description>WildFly Swarm HelloWorld Sample</description>
+	<packaging>war</packaging>
+
+	<properties>
+		<qe.openjdk.broken.file>**/Broken*.java</qe.openjdk.broken.file>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.thorntail</groupId>
+			<artifactId>cdi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.thorntail</groupId>
+			<artifactId>undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>sti</finalName>
+
+		<pluginManagement>
+			<plugins>
+				<!-- We specify the Maven compiler plugin as we need to set it to Java 1.8 -->
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.version}</version>
+					<configuration>
+						<excludes>
+							<exclude>${qe.openjdk.broken.file}</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>io.thorntail</groupId>
+				<artifactId>thorntail-maven-plugin</artifactId>
+				<version>${thorntail.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<systemPropertyVariables>
+						<qe.openjdk.test.fail>${qe.openjdk.test.fail}</qe.openjdk.test.fail>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>openshift</id>
+		</profile>
+		<profile>
+			<id>broken-deps</id>
+			<repositories>
+				<repository>
+					<id>broken-repository</id>
+					<url>http://broken.repo</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<dependencies>
+				<dependency>
+					<groupId>broken-group</groupId>
+					<artifactId>broken-artifact</artifactId>
+					<version>1.0.0.Final</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>fail-test</id>
+			<properties>
+				<qe.openjdk.test.fail>true</qe.openjdk.test.fail>
+			</properties>
+		</profile>
+		<profile>
+			<id>compile-error</id>
+			<properties>
+				<qe.openjdk.broken.file>Ignore</qe.openjdk.broken.file>
+			</properties>
+		</profile>
+
+	</profiles>
+
+</project>

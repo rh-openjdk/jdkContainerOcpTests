@@ -1,0 +1,10 @@
+swarm:
+  http:
+    keystore:
+      path: /ssl/keystore
+      password: password
+    key:
+      password: password
+    certificate:
+      # SWARM-1040
+      alias: wildfly-swarm-ssl

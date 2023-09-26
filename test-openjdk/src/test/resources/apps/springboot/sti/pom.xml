@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.redhat.qe.openjdk</groupId>
+        <artifactId>parent-msa-sb</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../parent-msa-sb</relativePath>
+    </parent>
+
+    <artifactId>sti</artifactId>
+    <name>Spring Boot Tomcat Sample</name>
+    <description>Spring Boot Tomcat Sample</description>
+    <url>http://projects.spring.io/spring-boot/</url>
+    <packaging>jar</packaging>
+
+    <properties>
+        <qe.openjdk.broken.file>**/Broken*.java</qe.openjdk.broken.file>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Set the name of the war, used as the context root when the app is deployed -->
+        <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <qe.openjdk.test.fail>${qe.openjdk.test.fail}</qe.openjdk.test.fail>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>${qe.openjdk.broken.file}</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+    <profiles>
+        <profile>
+            <id>openshift</id>
+        </profile>
+        <profile>
+            <id>broken-deps</id>
+            <repositories>
+                <repository>
+                    <id>broken-repository</id>
+                    <url>http://broken.repo</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <dependencies>
+                <dependency>
+                    <groupId>broken-group</groupId>
+                    <artifactId>broken-artifact</artifactId>
+                    <version>1.0.0.Final</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>fail-test</id>
+            <properties>
+                <qe.openjdk.test.fail>true</qe.openjdk.test.fail>
+            </properties>
+        </profile>
+        <profile>
+            <id>compile-error</id>
+            <properties>
+                <qe.openjdk.broken.file>Ignore</qe.openjdk.broken.file>
+            </properties>
+        </profile>
+    </profiles>
+</project>

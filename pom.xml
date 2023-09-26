@@ -1,0 +1,287 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.redhat.openjdk.qe</groupId>
+	<artifactId>openjdk</artifactId>
+	<version>4.1.0</version>
+	<packaging>pom</packaging>
+	<name>Red Hat OpenJDK OCP Test Suite</name>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Dependencies -->
+		<version.xtf>0.29</version.xtf>
+		<version.org.slf4j>1.7.32</version.org.slf4j>
+		<version.io.fabric8.openshift-client>5.12.4</version.io.fabric8.openshift-client>
+		<version.junit.platform>1.8.2</version.junit.platform>
+		<version.junit.jupiter>5.8.2</version.junit.jupiter>
+		<version.lombok>1.18.22</version.lombok>
+		<version.assertj-core>3.21.0</version.assertj-core>
+		<version.guava>31.1-jre</version.guava>
+		<version.logback-classic>1.2.7</version.logback-classic>
+		<version.javax.json-api>1.1.4</version.javax.json-api>
+		<version.maven-invoker>3.1.0</version.maven-invoker>
+		<version.commons-io>2.11.0</version.commons-io>
+		<version.commons-codec>1.15</version.commons-codec>
+		<version.commons-lang3>3.12.0</version.commons-lang3>
+		<version.jackson-databind>2.13.0</version.jackson-databind>
+		
+
+		<!-- Plugins -->
+		<version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
+		<version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
+		<version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+	</properties>
+
+	<modules>
+		<module>test-openjdk</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Project versions -->
+			<!-- Modules from https://github.com/xtf-cz/xtf -->
+			<dependency>
+				<groupId>cz.xtf</groupId>
+				<artifactId>core</artifactId>
+				<version>${version.xtf}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cz.xtf</groupId>
+				<artifactId>builder</artifactId>
+				<version>${version.xtf}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cz.xtf</groupId>
+				<artifactId>junit5</artifactId>
+				<version>${version.xtf}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cz.xtf</groupId>
+				<artifactId>http-client</artifactId>
+				<version>${version.xtf}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cz.xtf</groupId>
+				<artifactId>test-helpers</artifactId>
+				<version>${version.xtf}</version>
+			</dependency>
+			<!-- Modules from https://github.com/fabric8io/kubernetes-client -->
+			<dependency>
+				<groupId>io.fabric8</groupId>
+				<artifactId>openshift-client</artifactId>
+				<version>${version.io.fabric8.openshift-client}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.fabric8</groupId>
+				<artifactId>kubernetes-client</artifactId>
+				<version>${version.io.fabric8.openshift-client}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.fabric8</groupId>
+				<artifactId>kubernetes-model</artifactId>
+				<version>${version.io.fabric8.openshift-client}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.junit.platform</groupId>
+				<artifactId>junit-platform-launcher</artifactId>
+				<version>${version.junit.platform}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>${version.junit.jupiter}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${version.junit.jupiter}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-params</artifactId>
+				<version>${version.junit.jupiter}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${version.jackson-databind}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.json</groupId>
+				<artifactId>javax.json-api</artifactId>
+				<version>${version.javax.json-api}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish</groupId>
+				<artifactId>javax.json</artifactId>
+				<version>${version.javax.json-api}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.maven.shared</groupId>
+				<artifactId>maven-invoker</artifactId>
+				<version>${version.maven-invoker}</version>
+			</dependency>
+
+			<!-- Logging versions -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${version.org.slf4j}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${version.logback-classic}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${version.commons-io}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${version.commons-codec}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${version.commons-lang3}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${version.guava}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>${version.assertj-core}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${version.lombok}</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.maven-compiler-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.maven-surefire-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${version.maven-clean-plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>log</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+						</fileset>
+						<fileset>
+							<directory>tmp</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+
+		<!-- For XTF snapshot versions-->
+		<repository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshots Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<!-- XTF released versions-->
+                <repository>
+                    <id>jboss-releases-repository</id>
+                    <name>JBoss Releases Repository</name>
+                    <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+
+	</repositories>
+
+	<profiles>
+		<profile>
+			<id>test-openjdk</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>test-openjdk</module>
+			</modules>
+		</profile>
+
+	</profiles>
+</project>

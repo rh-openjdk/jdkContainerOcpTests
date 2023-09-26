@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>openjdk</artifactId>
+        <groupId>com.redhat.openjdk.qe</groupId>
+        <version>4.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>test-openjdk</artifactId>
+    <name>OpenJdkQe Test Suite :: OpenJDK</name>
+
+    <properties>
+        <version.org.springframework.spring-boot>2.6.1</version.org.springframework.spring-boot>
+        <version.rest.assured>4.4.0</version.rest.assured>
+
+        <xtf.openjdk.subid>8</xtf.openjdk.subid>
+
+        <groups/>
+        <excludedGroups>EMPTY</excludedGroups>
+        <excludedGroupsVersions>EMPTY</excludedGroupsVersions>
+        <test.script.debug>false</test.script.debug>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cz.xtf</groupId>
+            <artifactId>core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.xtf</groupId>
+            <artifactId>http-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.xtf</groupId>
+            <artifactId>builder</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.xtf</groupId>
+            <artifactId>test-helpers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>cz.xtf</groupId>
+            <artifactId>junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>openshift-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-invoker</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <groups>${groups}</groups>
+                    <excludedGroups>${excludedGroupsVersions}, ${excludedGroups}</excludedGroups>
+                    <failIfNoTests>false</failIfNoTests>
+                    <trimStackTrace>false</trimStackTrace>
+                    <runOrder>filesystem</runOrder>
+                    <systemProperties>
+                        <xtf.junit.used_images>openjdk</xtf.junit.used_images>
+                        <xtf.openjdk.subid>${xtf.openjdk.subid}</xtf.openjdk.subid>
+                        <sun.net.spi.nameservice.provider.1>dns,sun</sun.net.spi.nameservice.provider.1>
+                        <sun.net.spi.nameservice.provider.2>default</sun.net.spi.nameservice.provider.2>
+                        <test.script.debug>${test.script.debug}</test.script.debug>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>8</id>
+            <properties>
+                <xtf.openjdk.subid>8</xtf.openjdk.subid>
+            </properties>
+        </profile>
+        <profile>
+            <id>11</id>
+            <properties>
+                <xtf.openjdk.subid>11</xtf.openjdk.subid>
+            </properties>
+        </profile>
+        <profile>
+            <id>17</id>
+            <properties>
+                <xtf.openjdk.subid>17</xtf.openjdk.subid>
+            </properties>
+        </profile>
+        <profile>
+            <id>smoke</id>
+            <properties>
+                <groups>smoke</groups>
+                <excludedGroups></excludedGroups>
+            </properties>
+        </profile>
+        <profile>
+            <id>multiarch</id>
+            <properties>
+                <groups>multiarch</groups>
+                <excludedGroups></excludedGroups>
+            </properties>
+        </profile>
+        <profile>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <!--Need tools.jar in compilation classpath. JDK 1.7 no longer has it there by default: -->
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                    <version>${maven.compiler.target}</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>
