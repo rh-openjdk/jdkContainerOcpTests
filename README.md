@@ -69,9 +69,15 @@ xtf.bm.namespace=alpha-builds
 ```
 
 A simplier approach to authetication and execution is to export the `kubeconfig` file then execute the test suite.
-`export KUBECONFIG=<path_to_kubeconfig>`
+``` bash 
+#mocked config 
+export KUBECONFIG=<path_to_kubeconfig>
+```
 
-`export KUBECONFIG=kubeconfig`
+``` bash 
+#past example
+export KUBECONFIG=kubeconfig
+```
 
 After this is done then it is just a matter of executing the testsuite as already defined above.
 
