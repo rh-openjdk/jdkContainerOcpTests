@@ -6,6 +6,7 @@ import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -132,7 +133,7 @@ public class OpenJDKTestParent {
 			ExecutorService executorService = Executors.newSingleThreadExecutor();
 			final Future<?> future = executorService.submit(() -> {
 				Collection<File> filesToArchive = FileUtils.listFiles(sources.toFile(), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-				try (ArchiveOutputStream o = new ArchiveStreamFactory().createArchiveOutputStream(ArchiveStreamFactory.TAR, pos)) {
+				try (TarArchiveOutputStream o = (TarArchiveOutputStream) new ArchiveStreamFactory().createArchiveOutputStream(ArchiveStreamFactory.TAR, pos)) {
 					for (File f : filesToArchive) {
 						String tarPath = sources.relativize(f.toPath()).toString();
 						log.trace("adding file to tar: {}", tarPath);
@@ -142,6 +143,7 @@ public class OpenJDKTestParent {
 						TarArchiveEntry tarArchiveEntry = (TarArchiveEntry)entry;
 						tarArchiveEntry.setModTime(Date.from(Instant.EPOCH));
 
+						o.setBigNumberMode(TarArchiveOutputStream.BIGNUMBER_POSIX);
 						o.putArchiveEntry(tarArchiveEntry);
 						if (f.isFile()) {
 							try (InputStream i = Files.newInputStream(f.toPath())) {
