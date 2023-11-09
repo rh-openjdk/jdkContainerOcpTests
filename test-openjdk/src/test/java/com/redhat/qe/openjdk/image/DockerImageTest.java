@@ -107,7 +107,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 	public void testExposedTcpPorts() {
 		// Port 8778 is from Jolokia and this has been pulled from the JDK17 containers.
 		// This port has also been removed from the ubi9 images.
-		if ( OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isRHEL9()) {
+		if ( OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isOpenJDK21() || OpenJDKTestConfig.isRHEL9()) {
 			Assertions.assertThat(metadata.exposedPorts("tcp")).containsOnly(8080, 8443);
 		} else {
     		Assertions.assertThat(metadata.exposedPorts("tcp")).containsOnly(8080, 8443, 8778);
@@ -142,7 +142,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			result = content.shell().execute("cat", "/usr/lib/jvm/java/jre/lib/security/java.security").getOutput();
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
 			result = content.shell().execute("cat", "/usr/lib/jvm/jre/conf/security/java.security").getOutput();
-		} else if (OpenJDKTestConfig.isOpenJDK17()){
+		} else if (OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isOpenJDK21()) {
 			result = content.shell().execute("cat", "/usr/lib/jvm/jre/conf/security/java.security").getOutput();
 		}
 
@@ -154,15 +154,23 @@ public class DockerImageTest extends AbstractDockerImageTest {
 	@Test
 	public void javaUtilitiesTest() {
         //Content should match what is in the java/bin folder. Or the $JAVA_HOME/bin folder
+		// JDK 8 for UBI 8 and Rhel 7
 		if ( OpenJDKTestConfig.isOpenJDK8() || OpenJDKTestConfig.isOpenJDK8Rhel7() ) {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk8.");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_8_UTILITIES);
+		// JDK 11 for Rhel 7, UBI 8, UBI 9
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk11.");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_11_UTILITIES);
+		// JDK 17 for UBI 8 and UBI 9
 		} else if (OpenJDKTestConfig.isOpenJDK17()){
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk17");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_17_UTILITIES);
+		}
+		// JDK 21 for UBI 8 and UBI 9
+		else if (OpenJDKTestConfig.isOpenJDK21()){
+			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk21");
+			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_21_UTILITIES);
 		}
 		else {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Error, jdk version not supported. Please check jdk container image.");
@@ -186,16 +194,19 @@ public class DockerImageTest extends AbstractDockerImageTest {
 		} else {
 			result.put("HOME", "/home/jboss");
 		}
-
-		if (OpenJDKTestConfig.isOpenJ9()) {
-			result.put("JAVA_HOME", OpenJDKTestConfig.isOpenJDK11() ? "/usr/lib/jvm/jre-11-openj9" : "/usr/lib/jvm/jre-1.8.0-openj9");
+		// Supported versions of OpenJDK 8,11, 17, 21
+		if (OpenJDKTestConfig.isOpenJDK21()) {
+			result.put("JAVA_HOME", "/usr/lib/jvm/java-21");
 		} else if (OpenJDKTestConfig.isOpenJDK17()) {
 			result.put("JAVA_HOME", "/usr/lib/jvm/java-17");
 		} else {
 			result.put("JAVA_HOME", OpenJDKTestConfig.isOpenJDK11() ? "/usr/lib/jvm/java-11" : "/usr/lib/jvm/java-1.8.0");
 		}
 		result.put("JAVA_VENDOR", OpenJDKTestConfig.isOpenJ9() ? "AdoptOpenJDK" : "openjdk");
-		if (OpenJDKTestConfig.isOpenJDK17()) {
+
+		if (OpenJDKTestConfig.isOpenJDK21()) {
+			result.put("JAVA_VERSION", "21");
+		} else if (OpenJDKTestConfig.isOpenJDK17()) {
 			result.put("JAVA_VERSION", "17");
 		} else {
 			result.put("JAVA_VERSION", OpenJDKTestConfig.isOpenJDK11() ? "11" : "1.8.0");
