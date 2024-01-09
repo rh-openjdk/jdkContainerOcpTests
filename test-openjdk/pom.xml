@@ -212,6 +212,12 @@
             </properties>
         </profile>
         <profile>
+            <id>21</id>
+            <properties>
+                <xtf.openjdk.subid>21</xtf.openjdk.subid>
+            </properties>
+        </profile>
+        <profile>
             <id>smoke</id>
             <properties>
                 <groups>smoke</groups>
@@ -231,12 +237,7 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <!--Need tools.jar in compilation classpath. JDK 1.7 no longer has it there by default: -->
-                    <groupId>com.sun</groupId>
-                    <artifactId>tools</artifactId>
-                    <version>${maven.compiler.target}</version>
-                    <scope>system</scope>
-                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+
                 </dependency>
             </dependencies>
         </profile>

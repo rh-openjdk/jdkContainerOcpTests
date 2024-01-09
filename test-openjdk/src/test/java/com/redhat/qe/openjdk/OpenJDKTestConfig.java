@@ -45,6 +45,10 @@ public class OpenJDKTestConfig {
 		return image().getRepo().contains("openjdk-17");
 	}
 
+	public static boolean isOpenJDK21() {
+		return image().getRepo().contains("openjdk-21");
+	}
+
 	// Need to spell out the Rhel 7-based builds because they do not follow the newer
 	// naming conventions.
 	public static boolean isOpenJDK8Rhel7() {

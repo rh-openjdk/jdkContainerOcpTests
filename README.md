@@ -9,8 +9,10 @@ This test suite is designed to be executed against current versions of Red Hat's
 | UBI 8                    | 8               | [openjdk-8](https://catalog.redhat.com/software/containers/ubi8/openjdk-8/5dd6a48dbed8bd164a09589a)                                  |
 | UBI 8                    | 11              | [openjdk-11](https://catalog.redhat.com/software/containers/ubi8/openjdk-11/5dd6a4b45a13461646f677f4)                                |
 | UBI 8                    | 17              | [openjdk-17](https://catalog.redhat.com/software/containers/ubi8/openjdk-17/618bdbf34ae3739687568813)                                |
+| UBI 8                    | 21              | TBD                                                                                                                                  | 
 | UBI 9                    | 11              | [openjdk-11](https://catalog.redhat.com/software/containers/ubi9/openjdk-11/61ee7bafed74b2ffb22b07ab)                                |
 | UBI 9                    | 17              | [openjdk-17](https://catalog.redhat.com/software/containers/ubi9/openjdk-17/61ee7c26ed74b2ffb22b07f6)                                |
+| UBI 9                    | 21              | TBD                                                                                                                                  |
 **Note**: `OpenJDK runtime images are not currently supported by this test suite.` 
 
 ***
@@ -31,6 +33,7 @@ To execute the test suite by hand against a defined version of Red Hat's OpenJDK
 * `MAVEN_HOME=/usr/bin/ mvn clean test -P 8 -P smoke -Dmaven.home=/usr/bin/`
 * `MAVEN_HOME=/usr/bin/ mvn clean test -P 11 -P smoke -Dmaven.home=/usr/bin/`
 * `MAVEN_HOME=/usr/bin/ mvn clean test -P 17 -P smoke -Dmaven.home=/usr/bin/`
+* `MAVEN_HOME=/usr/bin/ mvn clean test -P 21 -P smoke -Dmaven.home=/usr/bin/`
 
 Notice this will execute the test for OpenJDK version 8, 11, or 17. These are the only versions that are supported for testing. To simplify the test execution a `run.sh` has been added. This is the preferred approach to executing tests against the UBI 8 and UBI 9 images. 
 
@@ -39,6 +42,7 @@ For UBI 8 and UBI 9 images it is recommended to use the bash script for the exec
 bash run.sh --jdk-version=8
 bash run.sh --jdk-version=11
 bash run.sh --jdk-version=17
+bash run.sh --jdk-version=21
 ```
 
 ## Configuration

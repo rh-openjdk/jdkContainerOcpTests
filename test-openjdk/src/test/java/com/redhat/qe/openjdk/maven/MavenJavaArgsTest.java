@@ -180,7 +180,7 @@ public class MavenJavaArgsTest extends AbstractEnvVarsTest {
 	@Test
 	public void javaDiagnosticsTest() {
 		deploy(JavaS2IBuild.DOCKER_IMAGE_TEST_APP.getManagedBuild(), Collections.singletonMap("JAVA_DIAGNOSTICS", "true"));
-		if (OpenJDKTestConfig.isOpenJDK17()) {
+		if ( OpenJDKTestConfig.isOpenJDK21() ||OpenJDKTestConfig.isOpenJDK17()) {
 			Assertions.assertThat(getJavaOpts())
 					.containsOnlyOnce("-XX:NativeMemoryTracking=summary")
 					.containsOnlyOnce("-Xlog:gc::utctime");
