@@ -9,10 +9,10 @@ This test suite is designed to be executed against current versions of Red Hat's
 | UBI 8                    | 8               | [openjdk-8](https://catalog.redhat.com/software/containers/ubi8/openjdk-8/5dd6a48dbed8bd164a09589a)                                  |
 | UBI 8                    | 11              | [openjdk-11](https://catalog.redhat.com/software/containers/ubi8/openjdk-11/5dd6a4b45a13461646f677f4)                                |
 | UBI 8                    | 17              | [openjdk-17](https://catalog.redhat.com/software/containers/ubi8/openjdk-17/618bdbf34ae3739687568813)                                |
-| UBI 8                    | 21              | TBD                                                                                                                                  | 
+| UBI 8                    | 21              | [openjdk-21](https://catalog.redhat.com/software/containers/ubi8/openjdk-21/653fb7e21b2ec10f7dfc10d0)                                | 
 | UBI 9                    | 11              | [openjdk-11](https://catalog.redhat.com/software/containers/ubi9/openjdk-11/61ee7bafed74b2ffb22b07ab)                                |
 | UBI 9                    | 17              | [openjdk-17](https://catalog.redhat.com/software/containers/ubi9/openjdk-17/61ee7c26ed74b2ffb22b07f6)                                |
-| UBI 9                    | 21              | TBD                                                                                                                                  |
+| UBI 9                    | 21              | [openjdk-21](https://catalog.redhat.com/software/containers/ubi9/openjdk-21/6501cdb5c34ae048c44f7814)                                                                                                                       |
 **Note**: `OpenJDK runtime images are not currently supported by this test suite.` 
 
 ***
