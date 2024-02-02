@@ -235,11 +235,6 @@
             <activation>
                 <jdk>1.8</jdk>
             </activation>
-            <dependencies>
-                <dependency>
-
-                </dependency>
-            </dependencies>
         </profile>
     </profiles>
 </project>
