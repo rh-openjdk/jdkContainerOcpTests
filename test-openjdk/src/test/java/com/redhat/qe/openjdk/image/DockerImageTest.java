@@ -131,8 +131,6 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
 		} else if (OpenJDKTestConfig.isOpenJDK17()){
 			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
-		} else if (OpenJDKTestConfig.isRHEL9() && OpenJDKTestConfig.isOpenJDK21()){  //Temp fix until https://issues.redhat.com/browse/OPENJDK-2595
-			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift/");
 		} else if (OpenJDKTestConfig.isOpenJDK21()){
 			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
 		}
