@@ -49,6 +49,15 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 			"jstat", "jstatd", "keytool", "pack200", "rmic",
 			"rmid", "rmiregistry", "serialver", "unpack200"
 	};
+	public static final String[] DEFAULT_IBM_P_Z_JAVA_11_UTILITIES = new String[]{
+		"alt-java", "jar", "jarsigner", "java",
+		"javac", "javadoc", "javap", "jcmd", "jconsole",
+		"jdb", "jdeprscan", "jdeps", "jfr", "jhsdb",
+		"jimage", "jinfo", "jjs", "jlink", "jmap",
+		"jmod", "jps", "jrunscript", "jshell", "jstack",
+		"jstat", "jstatd", "keytool", "pack200", "rmic",
+		"rmid", "rmiregistry", "serialver", "unpack200"
+  };
 	public static final String[] DEFAULT_JAVA_17_UTILITIES = new String[]{
 			"alt-java", "jar", "jarsigner", "java", "javac",
 			"javadoc", "javap", "jcmd", "jconsole", "jdb",

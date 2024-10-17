@@ -76,10 +76,6 @@ public class OpenJDKTestConfig {
 		return getImageUrl().contains("ubi9");
 	}
 
-    public static boolean isOpenJ9() {
-        return image().getRepo().contains("openj9-");
-    }
-
 	public static boolean isMavenProxyEnabled() {
 		return mavenProxyUrl() != null;
 	}
