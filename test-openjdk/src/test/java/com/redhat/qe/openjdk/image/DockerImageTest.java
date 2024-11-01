@@ -16,7 +16,6 @@ import com.redhat.qe.openjdk.OpenJDKTestConfig;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
@@ -159,25 +158,22 @@ public class DockerImageTest extends AbstractDockerImageTest {
 	public void javaUtilitiesTest() {
 		// Lets see if it is a IBM ppc64le or s390x JDK
 		boolean isIBMArch = (metadata.labels().get("architecture").equals("ppc64le")) || (metadata.labels().get("architecture").equals("s390x"));
-        //Content should match what is in the java/bin folder. Or the $JAVA_HOME/bin folder
+		//Content should match what is in the java/bin folder. Or the $JAVA_HOME/bin folder
 		// JDK 8 for UBI 8 and Rhel 7
 		if ( OpenJDKTestConfig.isOpenJDK8() || OpenJDKTestConfig.isOpenJDK8Rhel7() ) {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk8.");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_8_UTILITIES);
 		// JDK 11 for Rhel 7, UBI 8, UBI 9
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
-			// Is JDK 11 for IBM ppc64le or s390x
+			// Is the JDK 11 for IBM ppc64le or s390x
 			if (isIBMArch) {
-				// Filter out "jaotc" from the default Java 11 utilities
-				List<String> filteredIBMJDK11Utilities = Arrays.stream(DEFAULT_JAVA_11_UTILITIES)
-        .filter(utility -> !"jaotc".equals(utility))
-        .collect(Collectors.toList());
+				// Filter out "jaotc" from the default Java 11 utilities and convert the result to an array
+				String [] updatedIBMJDK11Utilities = Arrays.stream(DEFAULT_JAVA_11_UTILITIES)
+				.filter(utility -> !"jaotc".equals(utility))
+				.toArray(String[]::new);
 
-        // Convert the list back to an array
-        String[] updatedIBMJDK11Utilities = filteredIBMJDK11Utilities.toArray(new String[0]);
-
-        LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for JDK11 on ppc64le or s390x.");
-        Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(updatedIBMJDK11Utilities);
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for JDK11 on ppc64le or s390x.");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(updatedIBMJDK11Utilities);
 			}
 			else {
 				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk11.");
