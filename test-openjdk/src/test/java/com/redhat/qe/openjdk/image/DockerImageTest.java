@@ -166,7 +166,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_8_UTILITIES);
 		// JDK 11 for Rhel 7, UBI 8, UBI 9
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
-			// Is JDK 11 for IBM ppc64le & s390x
+			// Is JDK 11 for IBM ppc64le or s390x
 			if (isIBMArch) {
 				// Filter out "jaotc" from the default Java 11 utilities
 				List<String> filteredIBMJDK11Utilities = Arrays.stream(DEFAULT_JAVA_11_UTILITIES)
