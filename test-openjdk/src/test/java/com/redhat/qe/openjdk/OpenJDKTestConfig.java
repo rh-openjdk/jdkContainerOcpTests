@@ -73,7 +73,20 @@ public class OpenJDKTestConfig {
 	}
 
 	public static boolean isRHEL9() {
-		return getImageUrl().contains("ubi9");
+		return checkImageOsVersion("9");
+	}
+
+	private static boolean checkImageOsVersion(String target) {
+		String ubiVer = "ubi";
+		String elsVer = "rhel";
+		boolean osCheck = false;
+		if (getImageUrl().contains(ubiVer.concat(target)) || getImageUrl().contains(elsVer.concat(target))) {
+			osCheck = true;
+		}
+		else {
+			osCheck = false;
+		}
+		return osCheck;
 	}
 
 	public static boolean isMavenProxyEnabled() {
