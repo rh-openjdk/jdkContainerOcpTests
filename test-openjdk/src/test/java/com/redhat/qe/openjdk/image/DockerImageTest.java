@@ -127,13 +127,13 @@ public class DockerImageTest extends AbstractDockerImageTest {
 		if (OpenJDKTestConfig.isRHEL7()){
 			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift/");
 		} else if( OpenJDKTestConfig.isOpenJDK8() ) {
-			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
+			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
-			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
+			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
 		} else if (OpenJDKTestConfig.isOpenJDK17()){
-			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
+			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
 		} else if (OpenJDKTestConfig.isOpenJDK21()){
-			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://jboss-container-images.github.io/openjdk/");
+			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
 		}
 
 	}
