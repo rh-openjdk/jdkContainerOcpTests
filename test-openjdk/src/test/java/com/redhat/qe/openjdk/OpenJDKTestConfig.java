@@ -69,7 +69,7 @@ public class OpenJDKTestConfig {
 	}
 
 	public static boolean isRHEL8() {
-		return getImageUrl().contains("ubi8");
+		return checkImageOsVersion("8");
 	}
 
 	public static boolean isRHEL9() {
