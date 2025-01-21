@@ -5,6 +5,7 @@ import com.redhat.qe.openjdk.util.annotation.MultiArchProfile;
 import com.redhat.qe.openjdk.util.annotation.SmokeTest;
 import cz.xtf.core.config.WaitingConfig;
 import cz.xtf.core.waiting.SimpleWaiter;
+import cz.xtf.junit5.model.DockerImageMetadata;
 import io.fabric8.kubernetes.api.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 import cz.xtf.core.openshift.OpenShift;
 import cz.xtf.core.openshift.OpenShifts;
 import cz.xtf.testhelpers.image.ImageContent;
-import cz.xtf.testhelpers.image.ImageMetadata;
 import cz.xtf.core.openshift.helpers.ResourceParsers;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 
 	@BeforeAll
 	public static void prepareImage() {
-		metadata = ImageMetadata.prepare(openShift, OpenJDKTestConfig.imageUrl());
+		metadata = DockerImageMetadata.get(openShift, OpenJDKTestConfig.image());
 		// Override default pod command `run-java.sh` to start without jar file present
 		// Attempt to replace functionality from the xtf framework.
 		String name = "test-pod";
