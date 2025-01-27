@@ -133,7 +133,7 @@ public class OpenJDKTestParent {
 			ExecutorService executorService = Executors.newSingleThreadExecutor();
 			final Future<?> future = executorService.submit(() -> {
 				Collection<File> filesToArchive = FileUtils.listFiles(sources.toFile(), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-				try (TarArchiveOutputStream o = (TarArchiveOutputStream) new ArchiveStreamFactory().createArchiveOutputStream(ArchiveStreamFactory.TAR, pos)) {
+				try (TarArchiveOutputStream o = new ArchiveStreamFactory().createArchiveOutputStream(ArchiveStreamFactory.TAR, pos)) {
 					for (File f : filesToArchive) {
 						String tarPath = sources.relativize(f.toPath()).toString();
 						log.trace("adding file to tar: {}", tarPath);

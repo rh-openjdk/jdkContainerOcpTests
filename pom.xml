@@ -13,18 +13,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Dependencies -->
-		<version.xtf>0.29</version.xtf>
+		<version.xtf>0.35</version.xtf>
 		<version.org.slf4j>1.7.32</version.org.slf4j>
-		<version.io.fabric8.openshift-client>5.12.4</version.io.fabric8.openshift-client>
+		<version.io.fabric8.openshift-client>6.8.1</version.io.fabric8.openshift-client>
 		<version.junit.platform>1.8.2</version.junit.platform>
 		<version.junit.jupiter>5.8.2</version.junit.jupiter>
-		<version.lombok>1.18.22</version.lombok>
+		<version.lombok>1.18.28</version.lombok>
 		<version.assertj-core>3.21.0</version.assertj-core>
-		<version.guava>31.1-jre</version.guava>
+		<version.guava>32.0.1-jre</version.guava>
 		<version.logback-classic>1.2.7</version.logback-classic>
 		<version.javax.json-api>1.1.4</version.javax.json-api>
 		<version.maven-invoker>3.1.0</version.maven-invoker>
-		<version.commons-io>2.11.0</version.commons-io>
+		<version.commons-io>2.16.1</version.commons-io>
 		<version.commons-codec>1.15</version.commons-codec>
 		<version.commons-lang3>3.12.0</version.commons-lang3>
 		<version.jackson-databind>2.13.0</version.jackson-databind>

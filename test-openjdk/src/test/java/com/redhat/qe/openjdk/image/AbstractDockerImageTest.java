@@ -1,6 +1,7 @@
 package com.redhat.qe.openjdk.image;
 
 
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 import cz.xtf.core.openshift.OpenShift;
 import cz.xtf.core.openshift.OpenShifts;
 import cz.xtf.testhelpers.image.ImageContent;
-import cz.xtf.testhelpers.image.ImageMetadata;
+import cz.xtf.junit5.model.DockerImageMetadata;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +70,7 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 
 	protected static final OpenShift openShift = OpenShifts.master();
 
-	protected static ImageMetadata metadata;
+	protected static DockerImageMetadata metadata;
 	protected static ImageContent content;
 
 	@BeforeAll
