@@ -1,6 +1,10 @@
 package com.redhat.qe.openjdk;
 
 import com.redhat.qe.openjdk.util.maven.PomModifier;
+import cz.xtf.core.image.Image;
+import cz.xtf.core.waiting.SimpleWaiter;
+import io.fabric8.openshift.api.model.ImageStream;
+import lombok.Getter;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
@@ -23,10 +27,7 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 import cz.xtf.builder.builders.ApplicationBuilder;
 import cz.xtf.core.openshift.OpenShifts;
@@ -58,6 +59,37 @@ public class OpenJDKTestParent {
 
 		return sourcesDir;
 	}
+
+	/**
+	 * Methods to support Imagestream testing
+	 */
+
+	/**
+	 * Create a new image stream. Block until the image stream is present in test namespace.
+	 *
+	 * @param imageUrl used for image stream creation
+	 * @param name     name of a image stream
+	 * @param tags     list of tags
+	 * @return reference to a new image stream in test namespace
+	 */
+	public static ImageStream createImageStream(String imageUrl, String name, String... tags) {
+		ImageStream imageStream = OpenShifts.master().createImageStream(Image.from(imageUrl).getImageStream(name, tags));
+		new SimpleWaiter(() -> OpenShifts.master()
+				.getImageStream(name) != null, TimeUnit.MINUTES, 3, String.format("Waiting for image stream [%s] to be created", name))
+				.waitFor();
+		return imageStream;
+	}
+
+	@Getter
+	private static final String[] failFastEventMessages = new String[] {
+			"(?s)Failed to pull image.*", // workaround https://github.com/xtf-cz/xtf/issues/500, event might contain multiline message on OCP4
+			"Build.*failed",
+			"Error syncing pod, skipping: failed to.*",
+			"FailedMount MountVolume.SetUp.*",
+			"Error creating: pods.*is forbidden:.*",
+			".*failed to fit in any node.*",
+			"Failed to attach volume.*"
+	};
 
 	public static ApplicationBuilder appFromBinaryBuild(final String appName) {
 		ApplicationBuilder appBuilder = new ApplicationBuilder(appName);
