@@ -7,7 +7,7 @@ spec:
     - type: Container
       default:
         cpu: "2"
-        memory: 512Mi
+        memory: 1024Mi
       defaultRequest:
         cpu: "1"
         memory: 256Mi

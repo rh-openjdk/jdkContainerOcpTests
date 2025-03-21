@@ -49,6 +49,9 @@ public class OpenJDKTestConfig {
 		return image().getRepo().contains("openjdk-21");
 	}
 
+	public static String getJlinkTemplateUrl(){
+		return product().property("template.url");
+	}
 	// Need to spell out the Rhel 7-based builds because they do not follow the newer
 	// naming conventions.
 	public static boolean isOpenJDK8Rhel7() {
