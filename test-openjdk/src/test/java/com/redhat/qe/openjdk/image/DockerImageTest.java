@@ -134,6 +134,8 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
 		} else if (OpenJDKTestConfig.isOpenJDK21()){
 			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
+		} else if (OpenJDKTestConfig.isOpenJDK25()){
+			Assertions.assertThat(metadata.labels().get("usage")).isEqualTo("https://rh-openjdk.github.io/redhat-openjdk-containers/");
 		}
 
 	}
@@ -145,7 +147,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			result = content.shell().execute("cat", "/usr/lib/jvm/java/jre/lib/security/java.security").getOutput();
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
 			result = content.shell().execute("cat", "/usr/lib/jvm/jre/conf/security/java.security").getOutput();
-		} else if (OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isOpenJDK21()) {
+		} else if (OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isOpenJDK21() || OpenJDKTestConfig.isOpenJDK25()) {
 			result = content.shell().execute("cat", "/usr/lib/jvm/jre/conf/security/java.security").getOutput();
 		}
 
@@ -189,6 +191,10 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk21");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_21_UTILITIES);
 		}
+		else if (OpenJDKTestConfig.isOpenJDK25()){
+			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk25");
+			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_25_UTILITIES);
+		}
 		else {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Error, jdk version not supported. Please check jdk container image.");
 			super.javaUtilitiesTest();
@@ -216,6 +222,8 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			result.put("JAVA_HOME", "/usr/lib/jvm/java-21");
 		} else if (OpenJDKTestConfig.isOpenJDK17()) {
 			result.put("JAVA_HOME", "/usr/lib/jvm/java-17");
+		} else if (OpenJDKTestConfig.isOpenJDK25()) {
+			result.put("JAVA_HOME", "/usr/lib/jvm/java-25");
 		} else {
 			result.put("JAVA_HOME", OpenJDKTestConfig.isOpenJDK11() ? "/usr/lib/jvm/java-11" : "/usr/lib/jvm/java-1.8.0");
 		}
@@ -224,6 +232,8 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			result.put("JAVA_VERSION", "21");
 		} else if (OpenJDKTestConfig.isOpenJDK17()) {
 			result.put("JAVA_VERSION", "17");
+		} else if (OpenJDKTestConfig.isOpenJDK25()) {
+			result.put("JAVA_VERSION", "25");
 		} else {
 			result.put("JAVA_VERSION", OpenJDKTestConfig.isOpenJDK11() ? "11" : "1.8.0");
 			// With ubi9, Jolokia was removed from all images.

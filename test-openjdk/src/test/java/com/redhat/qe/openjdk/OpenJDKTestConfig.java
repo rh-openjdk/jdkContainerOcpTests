@@ -48,6 +48,9 @@ public class OpenJDKTestConfig {
 	public static boolean isOpenJDK21() {
 		return image().getRepo().contains("openjdk-21");
 	}
+	public static boolean isOpenJDK25() {
+		return image().getRepo().contains("openjdk-25");
+	}
 
 	public static String getJlinkTemplateUrl(){
 		return product().property("template.url");

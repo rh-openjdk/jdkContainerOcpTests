@@ -218,6 +218,12 @@
             </properties>
         </profile>
         <profile>
+            <id>25</id>
+            <properties>
+                <xtf.openjdk.subid>25</xtf.openjdk.subid>
+            </properties>
+        </profile>
+        <profile>
             <id>smoke</id>
             <properties>
                 <groups>smoke</groups>
