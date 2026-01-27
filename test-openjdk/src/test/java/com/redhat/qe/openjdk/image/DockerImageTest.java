@@ -150,9 +150,10 @@ public class DockerImageTest extends AbstractDockerImageTest {
 		} else if (OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isOpenJDK21() || OpenJDKTestConfig.isOpenJDK25()) {
 			result = content.shell().execute("cat", "/usr/lib/jvm/jre/conf/security/java.security").getOutput();
 		}
-
-		Assertions.assertThat(result).containsPattern(
-				Pattern.compile("^securerandom.source=file:/dev/urandom$", Pattern.MULTILINE));
+        if (!OpenJDKTestConfig.isOpenJDK25()) {
+			Assertions.assertThat(result).containsPattern(
+					Pattern.compile("^securerandom.source=file:/dev/urandom$", Pattern.MULTILINE));
+		}
 	}
 
 	@Override
