@@ -71,7 +71,7 @@ public class JavaMemoryOptionsTest extends AbstractEnvVarsTest {
 		deploy(JavaS2IBuild.DOCKER_IMAGE_TEST_APP.getManagedBuild(),
 				ImmutableMap.of("CONTAINER_MAX_MEMORY", "536870912"), createCpuResource("100m", "2"),
 				null);
-		if ( OpenJDKTestConfig.isRHEL9()) {
+		if ( OpenJDKTestConfig.isRHEL9() || OpenJDKTestConfig.isRHEL10() ) {
 			Assertions.assertThat(getJavaOpts()).containsOnlyOnce("-XX:MaxRAMPercentage=80.0");
 		} else if (OpenJDKTestConfig.isRHEL8()) {
 			// Only set the MaxRAMPercentage to 50. This will be raised to 80 later this year.

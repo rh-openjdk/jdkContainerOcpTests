@@ -79,6 +79,10 @@ public class OpenJDKTestConfig {
 		return checkImageOsVersion("9");
 	}
 
+	public static boolean isRHEL10() {
+		return checkImageOsVersion("10");
+	}
+
 	private static boolean checkImageOsVersion(String target) {
 		String ubiVer = "ubi";
 		String elsVer = "rhel";
