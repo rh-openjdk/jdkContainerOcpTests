@@ -47,7 +47,7 @@ do
 done
 
 # Check the OpenJDK Version to make sure the tests supports it.
-if [ $OPENJDK_VERSION -eq 8 ] || [ $OPENJDK_VERSION -eq 11 ] || [ $OPENJDK_VERSION -eq 17 ] || [ $OPENJDK_VERSION -eq 21 ] ; then
+if [ $OPENJDK_VERSION -eq 8 ] || [ $OPENJDK_VERSION -eq 11 ] || [ $OPENJDK_VERSION -eq 17 ] || [ $OPENJDK_VERSION -eq 21 ] || [ $OPENJDK_VERSION -eq 25 ] ; then
   echo "OpenJDK version under test is: $OPENJDK_VERSION"
   else
     echo "Unsupported OpenJDK version detected."

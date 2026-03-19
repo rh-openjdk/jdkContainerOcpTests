@@ -66,6 +66,14 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 			"jinfo", "jmap", "jpackage", "jrunscript", "jstack",
 			"jstatd", "keytool", "serialver"
 	};
+	public static final String[] DEFAULT_JAVA_25_UTILITIES = new String[]{
+			"alt-java", "jarsigner", "javac", "javap", "jconsole",
+			"jdeprscan", "jfr", "jimage", "jlink", "jmod", "jps",
+			"jshell", "jstat", "jwebserver", "rmiregistry", "jar",
+			"java", "javadoc", "jcmd", "jdb", "jdeps", "jhsdb",
+			"jinfo", "jmap", "jpackage", "jrunscript", "jstack",
+			"jstatd", "keytool", "serialver"
+	};
 	public static final String RED_HAT_RELEASE_KEY_2 = "199e2f91fd431d51";
 
 	protected static final OpenShift openShift = OpenShifts.master();
