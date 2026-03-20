@@ -65,7 +65,7 @@ public class MavenJavaArgsTest extends AbstractEnvVarsTest {
 	@Test
 	public void absolutePathArtifactDirTest() throws IOException {
 		// Because of some environment variable changes
-		if ( OpenJDKTestConfig.isRHEL9()) {
+		if ( OpenJDKTestConfig.isRHEL9() || OpenJDKTestConfig.isRHEL10() ) {
 			boolean buildResult = startLocalBuild(JavaS2IBuild.ABSOLUTE_PATH_ARTIFACT_DIR_NEW.getBuildDefinition().getBuildName(),
 					JavaS2IBuild.ABSOLUTE_PATH_ARTIFACT_DIR_NEW.getBuildDefinition().getEnvProperties());
 			String buildName = JavaS2IBuild.ABSOLUTE_PATH_ARTIFACT_DIR_NEW.getBuildDefinition().getBuildName();
