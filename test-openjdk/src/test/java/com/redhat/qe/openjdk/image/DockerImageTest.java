@@ -91,7 +91,11 @@ public class DockerImageTest extends AbstractDockerImageTest {
 
 	@Test
 	public void testCorrectCommand() {
-		Assertions.assertThat(metadata.command()).isEqualTo("/usr/local/s2i/run");
+		if (OpenJDKTestConfig.isRHEL10()){
+			Assertions.assertThat(metadata.command()).isEqualTo("/usr/libexec/s2i/run");
+		} else {
+			Assertions.assertThat(metadata.command()).isEqualTo("/usr/local/s2i/run");
+		}
 	}
 
 	@Test
@@ -150,7 +154,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 		} else if (OpenJDKTestConfig.isOpenJDK17() || OpenJDKTestConfig.isOpenJDK21() || OpenJDKTestConfig.isOpenJDK25()) {
 			result = content.shell().execute("cat", "/usr/lib/jvm/jre/conf/security/java.security").getOutput();
 		}
-        if (!OpenJDKTestConfig.isOpenJDK25()) {
+		if (!OpenJDKTestConfig.isOpenJDK25()) {
 			Assertions.assertThat(result).containsPattern(
 					Pattern.compile("^securerandom.source=file:/dev/urandom$", Pattern.MULTILINE));
 		}
@@ -187,7 +191,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk17");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_17_UTILITIES);
 		}
-		// JDK 21 for UBI 8 and UBI 9
+		// JDK 21 for UBI 8 and UBI 9 and UBI 10
 		else if (OpenJDKTestConfig.isOpenJDK21()){
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk21");
 			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_21_UTILITIES);
@@ -213,12 +217,12 @@ public class DockerImageTest extends AbstractDockerImageTest {
 	private static Map<String, String> getExpectedEnvironments() {
 		final Map<String, String> result = new HashMap<>();
 		// With the ubi9 (RHEL 9) images the user has been changed from /home/jboss to /home/default/
-		if (OpenJDKTestConfig.isRHEL9()) {
+		if (OpenJDKTestConfig.isRHEL9() || OpenJDKTestConfig.isRHEL10()) {
 			result.put("HOME", "/home/default");
 		} else {
 			result.put("HOME", "/home/jboss");
 		}
-		// Supported versions of OpenJDK 8,11, 17, 21
+		// Supported versions of OpenJDK 8,11, 17, 21, 25
 		if (OpenJDKTestConfig.isOpenJDK21()) {
 			result.put("JAVA_HOME", "/usr/lib/jvm/java-21");
 		} else if (OpenJDKTestConfig.isOpenJDK17()) {
