@@ -81,8 +81,8 @@ public enum JavaS2IBuild implements BuildDefinition {
 	private static SpringBootBuildDefinition getSpringBootBuildDefinition() {
 		String homeFolderName;
 
-		if (OpenJDKTestConfig.isRHEL9()) {
-			//Rhel 9s home folder is /home/default
+		if (OpenJDKTestConfig.isRHEL9() || OpenJDKTestConfig.isRHEL10()) {
+			//Rhel 9 and newer home folder is /home/default
 			homeFolderName = "/home/default";
 		}else {
 			homeFolderName = "/home/jboss";
