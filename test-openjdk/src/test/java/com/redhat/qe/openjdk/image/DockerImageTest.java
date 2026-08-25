@@ -253,11 +253,7 @@ public class DockerImageTest extends AbstractDockerImageTest {
 		} else if (OpenJDKTestConfig.isRHEL8()) {
 			result.put("MAVEN_VERSION", "3.8");
 		} else {
-			if (OpenJDKTestConfig.isOpenJDK11()) {
-				result.put("MAVEN_VERSION", "3.8");
-			} else {
-				result.put("MAVEN_VERSION", "3.9");
-			}
+			result.put("MAVEN_VERSION", "3.9");
 		}
 
 
