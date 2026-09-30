@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import com.redhat.qe.openjdk.OpenJDKTestConfig;
 import com.redhat.qe.openjdk.OpenJDKTestParent;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,19 +42,9 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 			"serialver", "servertool", "tnameserv",
 			"unpack200", "wsgen", "wsimport", "xjc"
 	};
-	public static final String[] DEFAULT_JAVA_8_UTILITIES_S390X = new String[]{
-			"alt-java", "appletviewer", "clhsdb", "extcheck",
-			"hsdb", "idlj", "jar", "jarsigner", "java",
-			"java-rmi.cgi", "javac", "javadoc", "javah",
-			"javap", "jcmd", "jconsole", "jdb",
-			"jdeps", "jhat", "jinfo", "jjs",
-			"jmap", "jps", "jrunscript", "jsadebugd",
-			"jstack", "jstat", "jstatd", "keytool",
-			"native2ascii", "orbd", "pack200", "policytool",
-			"rmic", "rmid", "rmiregistry", "schemagen",
-			"serialver", "servertool", "tnameserv",
-			"unpack200", "wsgen", "wsimport", "xjc"
-	};
+	public static final String[] DEFAULT_JAVA_8_UTILITIES_S390X = Arrays.stream(DEFAULT_JAVA_8_UTILITIES)
+			.filter(item -> !item.equals("jfr"))
+			.toArray(String[]::new);
 	public static final String[] DEFAULT_JAVA_11_UTILITIES = new String[]{
 			"alt-java", "jaotc", "jar", "jarsigner", "java",
 			"javac", "javadoc", "javap", "jcmd", "jconsole",
@@ -71,14 +62,9 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 			"jps", "jrunscript", "jshell", "jstack", "jstat",
 			"jstatd", "keytool", "rmiregistry", "serialver"
 	};
-	public static final String[] DEFAULT_JAVA_17_UTILITIES_S390X = new String[]{
-			"alt-java", "jar", "jarsigner", "java", "javac",
-			"javadoc", "javap", "jcmd", "jconsole", "jdb",
-			"jdeprscan", "jdeps", "jfr", "jimage",
-			"jinfo", "jlink", "jmap", "jmod", "jpackage",
-			"jps", "jrunscript", "jshell", "jstack", "jstat",
-			"jstatd", "keytool", "rmiregistry", "serialver"
-	};
+	public static final String[] DEFAULT_JAVA_17_UTILITIES_S390X = Arrays.stream(DEFAULT_JAVA_17_UTILITIES)
+			.filter(item -> !item.equals("jhsdb"))
+			.toArray(String[]::new);
 	public static final String[] DEFAULT_JAVA_21_UTILITIES = new String[]{
 			"alt-java", "jarsigner", "javac", "javap", "jconsole",
 			"jdeprscan", "jfr", "jimage", "jlink", "jmod", "jps",
@@ -87,14 +73,9 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 			"jinfo", "jmap", "jpackage", "jrunscript", "jstack",
 			"jstatd", "keytool", "serialver"
 	};
-	public static final String[] DEFAULT_JAVA_21_UTILITIES_S390X = new String[]{
-			"alt-java", "jarsigner", "javac", "javap", "jconsole",
-			"jdeprscan", "jfr", "jimage", "jlink", "jmod", "jps",
-			"jshell", "jstat", "jwebserver", "rmiregistry", "jar",
-			"java", "javadoc", "jcmd", "jdb", "jdeps",
-			"jinfo", "jmap", "jpackage", "jrunscript", "jstack",
-			"jstatd", "keytool", "serialver"
-	};
+	public static final String[] DEFAULT_JAVA_21_UTILITIES_S390X = Arrays.stream(DEFAULT_JAVA_21_UTILITIES)
+			.filter(item -> !item.equals("jhsdb"))
+			.toArray(String[]::new);
 	public static final String[] DEFAULT_JAVA_25_UTILITIES = new String[]{
 			"alt-java", "jarsigner", "javac", "javap", "jconsole",
 			"jdeprscan", "jfr", "jimage", "jlink", "jmod", "jps",
@@ -103,14 +84,9 @@ public abstract class AbstractDockerImageTest extends OpenJDKTestParent {
 			"jinfo", "jmap", "jpackage", "jrunscript", "jstack",
 			"jstatd", "keytool", "serialver"
 	};
-	public static final String[] DEFAULT_JAVA_25_UTILITIES_S390X = new String[]{
-			"alt-java", "jarsigner", "javac", "javap", "jconsole",
-			"jdeprscan", "jfr", "jimage", "jlink", "jmod", "jps",
-			"jshell", "jstat", "jwebserver", "rmiregistry", "jar",
-			"java", "javadoc", "jcmd", "jdb", "jdeps",
-			"jinfo", "jmap", "jpackage", "jrunscript", "jstack",
-			"jstatd", "keytool", "serialver"
-	};
+	public static final String[] DEFAULT_JAVA_25_UTILITIES_S390X = Arrays.stream(DEFAULT_JAVA_25_UTILITIES)
+			.filter(item -> !item.equals("jhsdb"))
+			.toArray(String[]::new);
 	public static final String RED_HAT_RELEASE_KEY_2 = "199e2f91fd431d51";
 
 	protected static final OpenShift openShift = OpenShifts.master();
