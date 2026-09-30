@@ -165,11 +165,17 @@ public class DockerImageTest extends AbstractDockerImageTest {
 	public void javaUtilitiesTest() {
 		// Lets see if it is a IBM ppc64le or s390x JDK
 		boolean isIBMArch = (metadata.labels().get("architecture").equals("ppc64le")) || (metadata.labels().get("architecture").equals("s390x"));
+		boolean isS390x = metadata.labels().get("architecture").equals("s390x");
 		//Content should match what is in the java/bin folder. Or the $JAVA_HOME/bin folder
 		// JDK 8 for UBI 8 and Rhel 7
 		if ( OpenJDKTestConfig.isOpenJDK8() || OpenJDKTestConfig.isOpenJDK8Rhel7() ) {
-			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk8.");
-			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_8_UTILITIES);
+			if (isS390x) {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for JDK8 on s390x.");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_8_UTILITIES_S390X);
+			} else {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk8.");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_8_UTILITIES);
+			}
 		// JDK 11 for Rhel 7, UBI 8, UBI 9
 		} else if (OpenJDKTestConfig.isOpenJDK11()){
 			// Is the JDK 11 for IBM ppc64le or s390x
@@ -188,17 +194,32 @@ public class DockerImageTest extends AbstractDockerImageTest {
 			}
 		// JDK 17 for UBI 8 and UBI 9
 		} else if (OpenJDKTestConfig.isOpenJDK17()){
-			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk17");
-			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_17_UTILITIES);
+			if (isS390x) {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for JDK17 on s390x.");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_17_UTILITIES_S390X);
+			} else {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk17");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_17_UTILITIES);
+			}
 		}
 		// JDK 21 for UBI 8 and UBI 9 and UBI 10
 		else if (OpenJDKTestConfig.isOpenJDK21()){
-			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk21");
-			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_21_UTILITIES);
+			if (isS390x) {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for JDK21 on s390x.");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_21_UTILITIES_S390X);
+			} else {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk21");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_21_UTILITIES);
+			}
 		}
 		else if (OpenJDKTestConfig.isOpenJDK25()){
-			LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk25");
-			Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_25_UTILITIES);
+			if (isS390x) {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for JDK25 on s390x.");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_25_UTILITIES_S390X);
+			} else {
+				LOGGER.info("DockerImageTest:javaUtilitiesTest::Running check for jdk25");
+				Assertions.assertThat(content.listDirContent("$JAVA_HOME/bin")).contains(super.DEFAULT_JAVA_25_UTILITIES);
+			}
 		}
 		else {
 			LOGGER.info("DockerImageTest:javaUtilitiesTest::Error, jdk version not supported. Please check jdk container image.");
